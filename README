@@ -1,0 +1,10 @@
+This package implements the BigQUIC algorithm for sparse inverse
+covariance estimation. 
+The package contains two folders: 
+
+1. bigquic: the main part of our algorithm. 
+   Please see the README file in bigquic/ for detail usage and examples. 
+
+2. lib: the metis library for clustering the graph. 
+
+

@@ -1,0 +1,109 @@
+===========================================================================
+BigQUIC algorithm for high-dimensional sprase inverse covariance estimation
+===========================================================================
+
+This package implements the BigQUIC algorithm for sparse inverse covariance 
+matrices in the following paper:
+
+Big & QUIC: Sparse Inverse Covariance Estimation for a Million Variables, 
+    in NIPS 2013, 
+    by Cho-Jui Hsieh, Matyas A. Sustik, Inderjit S. Dhillon, 
+   	   Pradeep Ravikumar, and Russell A. Poldrack.
+
+Our algorithm works better for dimension between 10K and 1 million. 
+For lower-dimensional problem, please use the QUIC software:
+
+http://www.cs.utexas.edu/~sustik/QUIC/
+
+We solve the following Gaussian MLE problem:
+
+minimize_X   -logdet(X) + tr(SX) + lambda*||X||_1 
+      s.t.   X is positive definite
+
+
+Installation 
+============
+    $ make
+
+Quick Start
+===========
+
+    $ ./bigquic-run ED_data_text ER_model
+
+
+Usages
+======
+    Run the program without arguments to show the detailed usage:
+
+	$ ./bigquic-run
+	Usage: ./QUIC [options] data_file output_filename
+	options:
+	    -l lambda : set the regularization parameter lambda (default 0.5)
+	    -n threads : set the number of threads (default 4)
+	    -t max_iter: set the number of iterations (default 5)
+	    -e epsilon : set inner termination criterion epsilon of CCDR1 (default 1e-3)
+	    -k num_blocks: number of blocks (default value depends on m)
+	    -m memory_usage: memory capacity in MB (default 8000)
+	                     This is just an estimate for the memory usage, so we recommend
+                         to use -k for exactly controling number of blocks
+        -q verbose: show information or not (default 1, can be 0, 1, 2)
+	    -r correlation: whether to use correlation matrix (default 1, can be 0, 1)
+
+Examples:
+=========
+
+	Setting lambda to be 0.6:
+
+    $ ./bigquic-run -l 0.6 ER_data_text ER_model
+
+	Setting numher of threads to be 1: 
+
+	$ ./bigquic-run -l 0.6 -n 1 ER_data_text ER_model
+
+Data format
+===========
+    The data_file is the input samples. 
+    This file should contain an n by p matrix Y, 
+    where p is number of random variabels and n is number of samples. 
+    The input format is:
+						
+    p n
+    Y11 Y12 ... Y1p
+    Y21 Y22 ... Y2p
+     .   .       . 
+     .   .       .
+    Yn1 Yn2 ... Ynp
+
+    See the file "ER_data_text" for a concrete example.
+
+
+Output format 
+=============
+
+The output file is a sparse representation for the inverse covariance matrix. 
+1st line shows number of nodes (p) and edges (nnz). 
+Each of the next nnz lines represents a nonzeroedge of the matrix. 
+
+
+Matlab Inteface
+===============
+
+Please type "make" in matlab to compile.
+
+Run the program without arguments to show the detailed usage:
+
+>> bigquic
+Usage: [X objlist timelist] = bigquic(S, [, 'pmf_options'])
+options:
+   -l lambda : set the regularization parameter lambda (default 0.5)
+	   -n threads : set the number of threads (default 4)
+	        -t max_iter: set the number of iterations (default 5)
+	   -e epsilon : set inner termination criterion epsilon of CCDR1 (default 1e-3)
+	   -k num_blocks: number of blocks (default value depends on m)
+	   -m memory_usage: memory capacity in MB (default 8000)
+	   -q verbose: show information or not (default 1, can be 0, 1, 2)
+	   -r correlation: whether to use correlation matrix (default 1, can be 0, 1)
+
+
+For any questions and comments, please send your email to
+cjhsieh AT cs dot utexas dot edu
