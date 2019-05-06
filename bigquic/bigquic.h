@@ -640,7 +640,7 @@ class smat_t {
 };
 
 extern "C" {
-void QUIC(int p, int n, double* samples, double lambda, double tol, int msg, int maxIter, int nblock, int numthreads, smat_t& X, vector<double> &objlist, vector<double> &timelist);
+void QUIC(int p, int n, double* samples, double lambda, double tol, int msg, int maxIter, int nblock, int numthreads, smat_t& X, vector<double> &objlist, vector<double> &timelist, FILE* fout);
 }
 
 #endif

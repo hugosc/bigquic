@@ -251,7 +251,7 @@ void NormalizeData(int p, int n, double *samples, double *samples_new, vector<in
 	}
 }
 
-void QUIC(int p, int n, double* samples, double lambda, double tol, int msg, int maxIter, int nblock, int numthreads, smat_t& X, vector<double> &objlist, vector<double> &timelist)
+void QUIC(int p, int n, double* samples, double lambda, double tol, int msg, int maxIter, int nblock, int numthreads, smat_t& X, vector<double> &objlist, vector<double> &timelist, FILE* fout)
 {
 	srand(1);
 	unsigned long maxNewtonIter = maxIter;
@@ -961,8 +961,12 @@ void QUIC(int p, int n, double* samples, double lambda, double tol, int msg, int
 		timelist.push_back(quic_time);
 		objlist.push_back(fX);
 
+		X.print(fout);
+		printf("\tsub-gradient: %.3f\n", subgrad);
+
 		// Check for convergence.
 		if (subgrad*alpha >= l1normX*tol && (fabs((fX - fXprev)/fX) >= EPS))
+
 			continue;
 		//		if (mode =='P') {
 		//			if (opt != NULL)

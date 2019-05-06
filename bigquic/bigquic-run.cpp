@@ -36,7 +36,7 @@ void exit_with_help()
 int main(int argc, char **argv)
 {
 	char input_file_name[1024], output_file_name[1024];
-	char *linestr = (char *)malloc(sizeof(char)*50);
+	char *linestr = (char *)malloc(sizeof(char)*2000);
 	double lambda=0.5;
 	int maxit = 5;
 	int numthreads = 4;
@@ -186,7 +186,7 @@ int main(int argc, char **argv)
 	for ( long i=0 ; i<subp ; i++ )
 		X.id_map[i] = mapping[i];
 
-	QUIC(p, n, samples_new, lambda, epsilon, verbose, maxit, k, numthreads, X, objlist, timelist);
+	QUIC(p, n, samples_new, lambda, epsilon, verbose, maxit, k, numthreads, X, objlist, timelist, fout);
 
 	// Output a symmetric solution
 	X.print(fout);
